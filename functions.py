@@ -20,11 +20,12 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.metrics import classification_report, recall_score, precision_score,\
 accuracy_score,f1_score,confusion_matrix,plot_confusion_matrix
+from imblearn.over_sampling import SMOTE, ADASYN
 import warnings
 import time
 warnings.filterwarnings('ignore')
 
-def vanilla_models(predictors,target,test_size=.3):
+def vanilla_models(X,y,test_size=.3):
     """ This function takes in predictors, a target variable and an optional test
     size parameter and returns results for 9 baseline classifiers"""
     
@@ -62,13 +63,13 @@ def vanilla_models(predictors,target,test_size=.3):
         if names[count] in req_scaling:
             X_train_scaled = scaler.fit_transform(X_train)
             X_test_scaled  = scaler.transform(X_test)
+ 
         else:
             X_train_scaled = X_train
             X_test_scaled = X_test
         clf.fit(X_train_scaled,y_train)
         train_preds = clf.predict(X_train_scaled)
         test_preds = clf.predict(X_test_scaled)
-        model_report = classification_report(y_test, test_preds,target_names = labels.keys(),output_dict = True)
         
         #training stats
         train_recall = round(recall_score(y_train,train_preds,average = 'weighted'),3)
@@ -100,6 +101,7 @@ def run_model(clf,X,y):
     
     start = time.time()
     X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=.3,random_state=42)
+    X_train, y_train = SMOTE().fit_resample(X_train,y_train)
     clf.fit(X_train,y_train)
     train_preds = clf.predict(X_train)
     test_preds = clf.predict(X_test)
@@ -137,6 +139,7 @@ def run_scaled_model(clf,X,y):
     use only for models on that require data scaling"""
     start = time.time()
     X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=.3,random_state=42)
+    X_train, y_train = SMOTE().fit_resample(X_train,y_train)
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
