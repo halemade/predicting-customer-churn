@@ -22,7 +22,7 @@ View EDA code here.
 
 ## Summary
 ### Baseline Model
-![baseline regression](./images/initial_model.png)
+![baseline regression](./images/initial_models.png)
 Built initial models using:
 <ul><li>Logistic Regression</li>
     <li>K Nearest Neighbors</li>
