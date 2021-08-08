@@ -23,9 +23,9 @@ View EDA code here.
 ## Summary
 ### Baseline Model
 ![baseline regression](./images/initial_models.png)
-Built initial models using:
+Built initial models using:<br><br>
 • Logistic Regression • K Nearest Neighbors • Naive Bayes • Linear SVM •<br>
-• RBF SVM • Decision Tree • Random Forest • Gradient Boosting • AdaBoost • XGBoost • <br>
+• RBF SVM • Decision Tree • Random Forest • Gradient Boosting • AdaBoost • XGBoost • <br><br>
 XGBoost was among the lowest regarding testing and training time and among the highest regarding predictive power, correctly classifying 95% of the testing set.
    
 
