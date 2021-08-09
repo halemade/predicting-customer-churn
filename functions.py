@@ -146,7 +146,7 @@ def run_scaled_model(clf,X,y):
     clf.fit(X_train,y_train)
     train_preds = clf.predict(X_train)
     test_preds = clf.predict(X_test)
-    model_report = classification_report(y_test, test_preds,target_names = labels.keys(),output_dict = True)
+   
 
     #training stats
     train_recall = round(recall_score(y_train,train_preds,average = 'weighted'),3)
@@ -172,3 +172,14 @@ def run_scaled_model(clf,X,y):
     train_plot = plot_confusion_matrix(clf,X_train,y_train)
     test_plot = plot_confusion_matrix(clf,X_test,y_test)
     return report, "Top plot: Training Data", "Bottom Plot: Testing Data"
+
+def plot_importances(model_dict,X):
+    features = dict(zip(X.columns,model_dict[0]['classifier'].feature_importances_))
+    fi = pd.DataFrame({
+    "features": list(X.columns),
+    "importances": model[0]['classifier'].feature_importances_ ,
+    })
+    sort = fi.sort_values(by=['features'])
+    fig = px.bar(sort, x="features", y="importances", barmode="group")
+    fig.update_layout(title = 'XGBoost Feature Importances')    
+    return fig.show()
