@@ -21,6 +21,7 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.metrics import classification_report, recall_score, precision_score,\
 accuracy_score,f1_score,confusion_matrix,plot_confusion_matrix
 from imblearn.over_sampling import SMOTE, ADASYN
+import plotly.express as px
 import warnings
 import time
 warnings.filterwarnings('ignore')
@@ -134,17 +135,19 @@ def run_model(clf,X,y):
 
 
 def run_scaled_model(clf,X,y):
+    #order: TTS,scale,resample, use only the scaled for predictions
     #train test splitsies
     """takes in an instantiated classifier and the predictive and target data. 
     use only for models on that require data scaling"""
     start = time.time()
     X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=.3,random_state=42)
-    X_train, y_train = SMOTE().fit_resample(X_train,y_train)
+    #!!!scale before resampling
+    X_train_resampled, y_train_resampled = SMOTE().fit_resample(X_train,y_train)
     scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
+    X_train_scaled = scaler.fit_transform(X_train_resampled)
+    X_test_scaled = scaler.transform(X_test)
     clf.fit(X_train,y_train)
-    train_preds = clf.predict(X_train)
+    train_preds = clf.predict(X_train) #don't predict on resampled data, predict on scaled X_train
     test_preds = clf.predict(X_test)
    
 
@@ -177,9 +180,9 @@ def plot_importances(model_dict,X):
     features = dict(zip(X.columns,model_dict[0]['classifier'].feature_importances_))
     fi = pd.DataFrame({
     "features": list(X.columns),
-    "importances": model[0]['classifier'].feature_importances_ ,
+    "importances": model_dict[0]['classifier'].feature_importances_ ,
     })
-    sort = fi.sort_values(by=['features'])
+    sort = fi.sort_values(by=['importances'],ascending=False)
     fig = px.bar(sort, x="features", y="importances", barmode="group")
     fig.update_layout(title = 'XGBoost Feature Importances')    
     return fig.show()
