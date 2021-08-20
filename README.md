@@ -30,6 +30,8 @@ Built initial models using:<br><br>
    
 
 ### Observations
+![important features](./images/important_features.png)
+
 Some of the most important features in determining whether or not SyriaTel retained the customer were: 
 <ul><li>total day charge</li>
     <li>international plan participation</li>
@@ -55,15 +57,16 @@ For additional info, contact the author at:<br>
 ```
 ├── EDA.ipynb
 ├── final_model.ipynb
-├── CODE
-│   ├── THR_prelim_modeling.ipynb
-│   └── more scratchwork
+├── THR_prelim_modeling.ipynb
 ├── data
 │   └── customer_churn.csv
 ├── images
 │   ├── nguyen-dang-hoang-nhu-qDgTQOYk6B8-unsplash.jpg
 │   ├── dom-fou-YRMWVcdyhmI-unsplash.jpg
 │   ├── EDA.png
+│   ├── EDA_1.png
+│   ├── roc_auc.png
+│   ├── important_features.png
 │   └── baseline.png
 ├── .gitignore
 ├── README.md
