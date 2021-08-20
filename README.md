@@ -16,7 +16,7 @@ This project uses a customer account information to predict churn rate.
 
 'Churn' is the target variable for this analysis. 
 
-View EDA code here.
+View EDA code [here.](./EDA.ipynb)
 
 ![eda plot](./images/EDA.png)
 
@@ -26,18 +26,25 @@ View EDA code here.
 Built initial models using:<br><br>
 • Logistic Regression • K Nearest Neighbors • Naive Bayes • Linear SVM •<br>
 • RBF SVM • Decision Tree • Random Forest • Gradient Boosting • AdaBoost • XGBoost • <br><br>
-**XGBoost** was among the lowest regarding testing and training time and among the highest regarding predictive power, correctly classifying 95% of the testing set.
+**XGBoost** was among the lowest regarding testing and training time and among the highest regarding predictive power, correctly classifying 94% of the testing set before hyperparameter tuning.
    
 
 ### Observations
-Observations here
+Some of the most important features in determining whether or not SyriaTel retained the customer were: 
+<ul><li>total day charge</li>
+    <li>international plan participation</li>
+    <li>voicemail plan participation</li></ul>
+
+With Total Day Charge being the most important determining feature, I suggest the company implement short term day rate discounts as a customer retention strategy. It would also be helpful to explore marketing strategies regarding international and voicemail plans.
 
 ### Final Model
-Final model information here
+Using gridsearch we tuned the hyperparameters to maximize a balance of precision and recall, with the resulting model configuration correctly classifying customer churn 96% of the time.
+
+![ROC/AUC curve](./images/roc_auc.png)
 
 ## For More Information
 
-See the full analysis in the [Jupyter Notebook](./final_model.ipynb) or review this [presentation](./Churn_Presentation.pdf).
+See the full analysis in the [Jupyter Notebook](./final-model.ipynb) or review this [presentation](./Churn_Presentation.pdf).
 
 For additional info, contact the author at:<br>
 [Taylor Hale Robert](mailto:taylorhale11@gmail.com)

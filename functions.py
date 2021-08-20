@@ -13,6 +13,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import make_moons, make_circles, make_classification
 from sklearn.svm import SVC
 from sklearn.gaussian_process import GaussianProcessClassifier
+import plotly.graph_objects as go
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
@@ -142,13 +143,13 @@ def run_scaled_model(clf,X,y):
     start = time.time()
     X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=.3,random_state=42)
     #!!!scale before resampling
-    X_train_resampled, y_train_resampled = SMOTE().fit_resample(X_train,y_train)
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train_resampled)
+    X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
-    clf.fit(X_train,y_train)
-    train_preds = clf.predict(X_train) #don't predict on resampled data, predict on scaled X_train
-    test_preds = clf.predict(X_test)
+    X_train_resampled, y_train_resampled = SMOTE().fit_resample(X_train_scaled,y_train)
+    clf.fit(X_train_resampled,y_train_resampled)
+    train_preds = clf.predict(X_train_scaled) #don't predict on resampled data, predict on scaled X_train
+    test_preds = clf.predict(X_test_scaled)
    
 
     #training stats
